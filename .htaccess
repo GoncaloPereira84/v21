@@ -1,0 +1,106 @@
+#order deny,allow
+allow from 149.90.209.55
+allow from 213.22.27.115
+allow from 88.157.103.167
+#deny from all
+
+# ----------------------------------------------------------------------
+
+# | URL Rewrite                                                        |
+
+# ----------------------------------------------------------------------
+
+
+
+DirectoryIndex index.php
+
+Options +FollowSymLinks
+
+
+
+RewriteEngine On
+
+RewriteBase /
+
+
+
+RewriteCond %{HTTP_HOST} !^www\.               [NC]
+
+RewriteCond %{HTTP_HOST} ^([^.]+\.[a-z]{2,6})$ [NC]
+
+RewriteRule ^(.*)$       https://www.%1/$1      [R=301,L]
+
+
+
+RewriteRule ^(.+[^/])/$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+
+
+#RewriteCond %{HTTPS} !on [OR]
+
+#RewriteCond %{HTTP_HOST} !^www\.
+
+#RewriteRule (.*) https://beta.v21.pt%{REQUEST_URI} [L,R=301]
+
+
+
+RewriteCond %{THE_REQUEST} ^(GET|HEAD)\s/(.+)\.php[^\s]* [NC]
+
+RewriteRule ^ /%2 [R=301,NE,L]
+
+
+
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteCond %{REQUEST_FILENAME}.php -f
+
+#RewriteRule ^ %{REQUEST_URI}.php [QSA,NC,L]
+
+
+
+RewriteCond %{SCRIPT_FILENAME} !-d
+
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteCond %{HTTP_HOST} !^\.localhost$ [NC]
+
+
+
+RewriteRule   ^incubacao/  incubacao.php  [NC]
+RewriteRule   ^sobre-nos/  sobre-nos.php  [NC]
+RewriteRule   ^programas-projectos/  programas-projectos.php  [NC]
+RewriteRule   ^noticias/  noticias.php  [NC]
+RewriteRule   ^contactos/  contactos.php  [NC]
+RewriteRule   ^inscricoes/  inscricoes.php  [NC]
+
+Redirect 301 /noticias/noticias-gerais/www.acingov.pt https://www.v21.pt
+
+# Redirect 404 Error pages to the home page
+ErrorDocument 404 https://www.v21.pt
+
+
+
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteCond %{REQUEST_FILENAME}\.php -f
+
+RewriteRule ^(.+)$ $1.php [L]
+
+
+# BEGIN cPanel-generated php ini directives, do not edit
+
+# Manual editing of this file may result in unexpected behavior.
+
+# To make changes to this file, use the cPanel MultiPHP INI Editor (Home >> Software >> MultiPHP INI Editor)
+
+# For more information, read our documentation (https://go.cpanel.net/EA4ModifyINI)
+
+<IfModule php5_module>
+
+   php_flag display_errors Off
+
+</IfModule>
+
+# END cPanel-generated php ini directives, do not edit
